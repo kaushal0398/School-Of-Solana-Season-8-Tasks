@@ -1,0 +1,416 @@
+{
+  "address": "6UUoNhQHHQjKiFjs5wbyQ8X5jHk4aVXEwi8Lzvt8cTFw",
+  "metadata": {
+    "name": "chainvault",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_chore",
+      "discriminator": [
+        181,
+        231,
+        205,
+        253,
+        91,
+        190,
+        39,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "chore",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  111,
+                  114,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "assigner"
+              },
+              {
+                "kind": "account",
+                "path": "chore_counter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child_wallet",
+          "writable": true
+        },
+        {
+          "name": "assigner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "assignee"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "chore_counter",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "max_payment",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_child_wallet",
+      "discriminator": [
+        200,
+        53,
+        68,
+        159,
+        70,
+        202,
+        121,
+        64
+      ],
+      "accounts": [
+        {
+          "name": "child_wallet",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  104,
+                  105,
+                  108,
+                  100,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "child"
+              }
+            ]
+          }
+        },
+        {
+          "name": "child"
+        },
+        {
+          "name": "guardian",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "rate_and_pay_chore",
+      "discriminator": [
+        84,
+        209,
+        121,
+        76,
+        106,
+        123,
+        242,
+        90
+      ],
+      "accounts": [
+        {
+          "name": "chore",
+          "writable": true
+        },
+        {
+          "name": "child_wallet",
+          "writable": true
+        },
+        {
+          "name": "guardian",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "child_actual_wallet",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "rating",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "submit_chore_completion",
+      "discriminator": [
+        68,
+        212,
+        51,
+        70,
+        66,
+        127,
+        32,
+        135
+      ],
+      "accounts": [
+        {
+          "name": "chore",
+          "writable": true
+        },
+        {
+          "name": "assignee",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "withdraw_earnings",
+      "discriminator": [
+        6,
+        132,
+        233,
+        254,
+        241,
+        87,
+        247,
+        185
+      ],
+      "accounts": [
+        {
+          "name": "child_wallet",
+          "writable": true
+        },
+        {
+          "name": "child",
+          "signer": true
+        },
+        {
+          "name": "child_actual_wallet",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ChildWallet",
+      "discriminator": [
+        10,
+        43,
+        184,
+        88,
+        99,
+        37,
+        20,
+        202
+      ]
+    },
+    {
+      "name": "Chore",
+      "discriminator": [
+        187,
+        225,
+        240,
+        165,
+        221,
+        183,
+        168,
+        255
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ChoreAlreadyCompleted",
+      "msg": "Chore is already completed"
+    },
+    {
+      "code": 6001,
+      "name": "ChoreNotCompleted",
+      "msg": "Chore is not completed yet"
+    },
+    {
+      "code": 6002,
+      "name": "UnauthorizedAssignee",
+      "msg": "Unauthorized assignee"
+    },
+    {
+      "code": 6003,
+      "name": "UnauthorizedGuardian",
+      "msg": "Unauthorized guardian"
+    },
+    {
+      "code": 6004,
+      "name": "UnauthorizedChild",
+      "msg": "Unauthorized child"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidRating",
+      "msg": "Invalid rating - must be between 1 and 10"
+    },
+    {
+      "code": 6006,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient balance"
+    }
+  ],
+  "types": [
+    {
+      "name": "ChildWallet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "child",
+            "type": "pubkey"
+          },
+          {
+            "name": "guardian",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_earned",
+            "type": "u64"
+          },
+          {
+            "name": "current_balance",
+            "type": "u64"
+          },
+          {
+            "name": "chores_completed",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Chore",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "assigner",
+            "type": "pubkey"
+          },
+          {
+            "name": "assignee",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "max_payment",
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ChoreStatus"
+              }
+            }
+          },
+          {
+            "name": "rating",
+            "type": {
+              "option": "u8"
+            }
+          },
+          {
+            "name": "actual_payment",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "completed_at",
+            "type": {
+              "option": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChoreStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Completed"
+          },
+          {
+            "name": "Paid"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+/* optional global styling */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
